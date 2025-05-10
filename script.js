@@ -1,5 +1,5 @@
 const API_CONFIG = {
-    BASE_URL: "http://127.0.0.1:5000",
+    BASE_URL: "https://paipai-backend.onrender.com", // 雲端後端 API 網址
     ENDPOINTS: {
         SEARCH: "/api/search"
     }
