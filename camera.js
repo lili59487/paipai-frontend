@@ -72,7 +72,7 @@ function stopBarcodeScan() {
 }
 
 // 相機按鈕事件監聽器
-document.getElementById('camera-button').addEventListener('click', async function() {
+document.getElementById('scanBarcodeBtn').addEventListener('click', async function() {
     if (!isCameraActive) {
         const success = await initCamera();
         if (success) {
