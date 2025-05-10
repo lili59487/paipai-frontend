@@ -1,4 +1,3 @@
-// Html5-qrcode 掃描功能
 const html5QrCode = new Html5Qrcode("reader");
 
 function onScanSuccess(decodedText, decodedResult) {
@@ -39,4 +38,4 @@ function showError(message) {
     setTimeout(() => {
         errorDiv.style.display = 'none';
     }, 5000);
-} 
+}
