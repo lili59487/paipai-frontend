@@ -1,5 +1,3 @@
-alert('camera.js loaded');
-
 let isCameraActive = false;
 
 // 初始化相機
@@ -73,6 +71,7 @@ function stopBarcodeScan() {
 
 // 相機按鈕事件監聽器
 document.getElementById('scanBarcodeBtn').addEventListener('click', function() {
+    alert('button clicked');
     if (!isCameraActive) {
         startBarcodeScan();
     } else {
