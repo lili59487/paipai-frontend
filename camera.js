@@ -1,3 +1,5 @@
+alert('camera.js loaded');
+
 let isCameraActive = false;
 
 // 初始化相機
