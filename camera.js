@@ -36,6 +36,12 @@ function startBarcodeScan() {
                     width: { ideal: 1280 },
                     height: { ideal: 720 }
                 },
+                area: {
+                    top: "25%",
+                    right: "25%",
+                    left: "25%",
+                    bottom: "25%"
+                }
             },
             decoder: {
                 readers: ["ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader"]
@@ -71,7 +77,6 @@ function stopBarcodeScan() {
 
 // 相機按鈕事件監聽器
 document.getElementById('scanBarcodeBtn').addEventListener('click', function() {
-    alert('button clicked');
     if (!isCameraActive) {
         startBarcodeScan();
     } else {
