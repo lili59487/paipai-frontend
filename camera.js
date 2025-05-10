@@ -2,6 +2,7 @@ let isCameraActive = false;
 
 // 初始化相機
 async function initCamera() {
+    alert('initCamera called');
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ 
             video: { 
