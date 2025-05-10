@@ -1,87 +1,22 @@
-let isCameraActive = false;
+// Html5-qrcode 掃描功能
+const qrResult = document.getElementById('qr-result');
+const html5QrCode = new Html5Qrcode("reader");
 
-// 初始化相機
-async function initCamera() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-            video: { 
-                facingMode: "environment",
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
-            } 
-        });
-        const video = document.getElementById('camera-preview');
-        video.srcObject = stream;
-        video.play();
-        return true;
-    } catch (error) {
-        console.error('相機初始化錯誤:', error);
-        showError('無法啟動相機，請確認相機權限');
-        return false;
-    }
+function onScanSuccess(decodedText, decodedResult) {
+    qrResult.value = decodedText;
+    document.getElementById('searchInput').value = decodedText;
+    html5QrCode.stop();
 }
 
-// 啟動條碼掃描
-function startBarcodeScan() {
-    if (!isCameraActive) {
-        const container = document.getElementById('camera-preview');
-        container.style.display = 'block';
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: '#camera-preview',
-                constraints: {
-                    facingMode: "environment",
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 }
-                },
-                area: {
-                    top: "25%",
-                    right: "25%",
-                    left: "25%",
-                    bottom: "25%"
-                }
-            },
-            decoder: {
-                readers: ["ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader"]
-            }
-        }, function(err) {
-            if (err) {
-                console.error('Quagga 初始化錯誤:', err);
-                showError('條碼掃描器初始化失敗');
-                return;
-            }
-            Quagga.start();
-            isCameraActive = true;
-        });
-
-        Quagga.onDetected(function(result) {
-            const code = result.codeResult.code;
-            document.getElementById('searchInput').value = code;
-            stopBarcodeScan();
-            document.getElementById('searchButton').click();
-        });
-    }
-}
-
-// 停止條碼掃描
-function stopBarcodeScan() {
-    if (isCameraActive) {
-        Quagga.stop();
-        const container = document.getElementById('camera-preview');
-        container.style.display = 'none';
-        isCameraActive = false;
-    }
-}
-
-// 相機按鈕事件監聽器
 document.getElementById('scanBarcodeBtn').addEventListener('click', function() {
-    if (!isCameraActive) {
-        startBarcodeScan();
-    } else {
-        stopBarcodeScan();
-    }
+    html5QrCode.start(
+        { facingMode: "environment" },
+        {
+            fps: 10,
+            qrbox: 250
+        },
+        onScanSuccess
+    );
 });
 
 function showError(message) {
