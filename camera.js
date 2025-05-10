@@ -2,7 +2,6 @@ let isCameraActive = false;
 
 // 初始化相機
 async function initCamera() {
-    alert('initCamera called');
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ 
             video: { 
@@ -32,7 +31,7 @@ function startBarcodeScan() {
             inputStream: {
                 name: "Live",
                 type: "LiveStream",
-                target: video,
+                target: '#camera-preview',
                 constraints: {
                     facingMode: "environment",
                     width: { ideal: 1280 },
@@ -72,12 +71,9 @@ function stopBarcodeScan() {
 }
 
 // 相機按鈕事件監聽器
-document.getElementById('scanBarcodeBtn').addEventListener('click', async function() {
+document.getElementById('scanBarcodeBtn').addEventListener('click', function() {
     if (!isCameraActive) {
-        const success = await initCamera();
-        if (success) {
-            startBarcodeScan();
-        }
+        startBarcodeScan();
     } else {
         stopBarcodeScan();
     }
