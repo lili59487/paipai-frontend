@@ -24,9 +24,8 @@ async function initCamera() {
 // 啟動條碼掃描
 function startBarcodeScan() {
     if (!isCameraActive) {
-        const video = document.getElementById('camera-preview');
-        video.style.display = 'block';
-        
+        const container = document.getElementById('camera-preview');
+        container.style.display = 'block';
         Quagga.init({
             inputStream: {
                 name: "Live",
@@ -64,8 +63,8 @@ function startBarcodeScan() {
 function stopBarcodeScan() {
     if (isCameraActive) {
         Quagga.stop();
-        const video = document.getElementById('camera-preview');
-        video.style.display = 'none';
+        const container = document.getElementById('camera-preview');
+        container.style.display = 'none';
         isCameraActive = false;
     }
 }
