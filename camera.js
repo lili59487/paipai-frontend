@@ -1,4 +1,5 @@
 const html5QrCode = new Html5Qrcode("reader");
+let isScanning = false;
 
 function onScanSuccess(decodedText, decodedResult) {
     const searchInput = document.getElementById('searchInput');
@@ -6,31 +7,41 @@ function onScanSuccess(decodedText, decodedResult) {
     searchInput.value = currentValue ? `${currentValue} ${decodedText}` : decodedText;
     html5QrCode.stop();
     document.getElementById('reader').style.display = 'none';
+    isScanning = false;
 }
 
 document.getElementById('scanBarcodeBtn').addEventListener('click', function() {
-    document.getElementById('reader').style.display = 'block';
-    html5QrCode.start(
-        { facingMode: "environment" },
-        {
-            fps: 10,
-            qrbox: 250,
-            formatsToSupport: [
-                Html5QrcodeSupportedFormats.QR_CODE,
-                Html5QrcodeSupportedFormats.EAN_13,
-                Html5QrcodeSupportedFormats.EAN_8,
-                Html5QrcodeSupportedFormats.UPC_A,
-                Html5QrcodeSupportedFormats.UPC_E,
-                Html5QrcodeSupportedFormats.CODE_128
-            ]
-        },
-        onScanSuccess
-    ).catch(err => {
-        // 錯誤處理
-        console.error("相機啟動失敗", err);
-        document.getElementById('error').textContent = '相機啟動失敗，請檢查權限或瀏覽器支援度';
-        document.getElementById('reader').style.display = 'none';
-    });
+    const reader = document.getElementById('reader');
+    
+    if (isScanning) {
+        html5QrCode.stop();
+        reader.style.display = 'none';
+        isScanning = false;
+    } else {
+        reader.style.display = 'block';
+        html5QrCode.start(
+            { facingMode: "environment" },
+            {
+                fps: 10,
+                qrbox: 250,
+                formatsToSupport: [
+                    Html5QrcodeSupportedFormats.QR_CODE,
+                    Html5QrcodeSupportedFormats.EAN_13,
+                    Html5QrcodeSupportedFormats.EAN_8,
+                    Html5QrcodeSupportedFormats.UPC_A,
+                    Html5QrcodeSupportedFormats.UPC_E,
+                    Html5QrcodeSupportedFormats.CODE_128
+                ]
+            },
+            onScanSuccess
+        ).catch(err => {
+            console.error("相機啟動失敗", err);
+            document.getElementById('error').textContent = '相機啟動失敗，請檢查權限或瀏覽器支援度';
+            reader.style.display = 'none';
+            isScanning = false;
+        });
+        isScanning = true;
+    }
 });
 
 function showError(message) {
