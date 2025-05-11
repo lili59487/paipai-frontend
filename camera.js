@@ -1,7 +1,9 @@
 const html5QrCode = new Html5Qrcode("reader");
 
 function onScanSuccess(decodedText, decodedResult) {
-    document.getElementById('searchInput').value = decodedText;
+    const searchInput = document.getElementById('searchInput');
+    const currentValue = searchInput.value.trim();
+    searchInput.value = currentValue ? `${currentValue} ${decodedText}` : decodedText;
     html5QrCode.stop();
     document.getElementById('reader').style.display = 'none';
 }
