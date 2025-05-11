@@ -119,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     cardContent = `
                         <div class="card-header">
                             <h3>${pesticide.中文名稱}</h3>
-                            ${mechanismBlock}
                         </div>
                         <div class="card-content">
                             <div class="pesticide-info">
@@ -160,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     cardContent = `
                         <div class="card-header">
                             <h3>${pesticide.中文名稱}</h3>
-                            ${mechanismBlock}
                         </div>
                         <div class="card-content">
                             <div class="pesticide-info">
@@ -198,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     cardContent = `
                         <div class="card-header">
                             <h3>${pesticide.中文名稱}</h3>
-                            ${mechanismBlock}
                         </div>
                         <div class="card-content">
                             <div class="pesticide-info">
